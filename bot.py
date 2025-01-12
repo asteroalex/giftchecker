@@ -47,7 +47,7 @@ def job():
 # Основная функция для запуска бота
 def main():
     # Ваш API Token
-    application = Application.builder().token("7720837143:AAG3Qf-ho7ejkFcr7HWCJcrgL5I5tpMnSwY").build()
+    application = Application.builder().token("7551756066:AAE_6k27umz8F3GWGmjeESgKi980W1K1OX4").build()
 
     # Обработчики команд
     application.add_handler(CommandHandler("start", start))
