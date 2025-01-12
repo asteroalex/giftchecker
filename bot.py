@@ -13,6 +13,12 @@ async def start(update: Update, context: CallbackContext) -> None:
     if update.message.from_user.id not in users:
         users.append(update.message.from_user.id)
 
+# Функция для отправки уведомлений о новых подарках
+async def send11(update: Update, context: CallbackContext) -> None:
+    await update.message.reply_text("Sending notification to all users about new gifts...")
+    # Отправляем уведомления всем пользователям
+    await notify_users(context)
+
 # Функция для отслеживания новых подарков
 def check_for_new_gifts():
     # Эта функция будет проверять наличие новых подарков (например, через API Telegram)
@@ -23,12 +29,12 @@ def check_for_new_gifts():
     if new_gift_found:
         notify_users()
 
-# Функция уведомления пользователей
-def notify_users():
+# Функция уведомления пользователей (сделана асинхронной)
+async def notify_users(context):
     for user_id in users:
         try:
             # Отправляем сообщение каждому пользователю
-            bot.send_message(user_id, "New gift available! Check it out!")
+            await context.bot.send_message(user_id, "New gift available! Check it out!")
         except Exception as e:
             print(f"Error notifying user {user_id}: {e}")
 
@@ -41,10 +47,11 @@ def job():
 # Основная функция для запуска бота
 def main():
     # Ваш API Token
-    application = Application.builder().token("7551756066:AAE_6k27umz8F3GWGmjeESgKi980W1K1OX4").build()
+    application = Application.builder().token("7720837143:AAG3Qf-ho7ejkFcr7HWCJcrgL5I5tpMnSwY").build()
 
     # Обработчики команд
     application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("send11", send11))
 
     # Запускаем планировщик в отдельном потоке
     threading.Thread(target=job).start()
